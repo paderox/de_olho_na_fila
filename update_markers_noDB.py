@@ -39,7 +39,7 @@ fhand2.write("\n];\n")
 fhand1.close()
 fhand2.close()
 
-print(count, "records written to markers.js")
+print(count, "records written to markers_noDB.js")
 print(count, "records written to markers.js in website DB")
 
 # markers = [ 

@@ -33,63 +33,67 @@ for entry in json_data:
     else:
         disponibilidade = 'nenhuma'
     
-    postoInfo = {
-        'id_posto': id_posto,
-        'nome': nome_posto,
-        'endereco': endereco,
-        'status_id': status_id,
-        'atualizado': data_hora,
-        'status_fila': status_posto,
-        'disponibilidade': disponibilidade,
-        'tipo_posto': tipo_posto
-    }
-
-    
-    # search in parsed_data for this 'posto'
-    # if it is there, update 'fila' info
-    # if it is not there, search for geocoding and add to postoInfo
-    try:
-        for record in parsed_data:
-            if record['id_posto'] == postoInfo['id_posto']:
-                record['status_id'] = postoInfo['status_id']
-                record['atualizado'] = postoInfo['atualizado']
-                record['status_fila'] = postoInfo['status_fila']
-                record['disponibilidade'] = postoInfo['disponibilidade']
-                old = True
-                break
-    except:
+    if (id_posto is None):
+        print('id posto None for', endereco)
         continue
+    else:
+        postoInfo = {
+            'id_posto': id_posto,
+            'nome': nome_posto,
+            'endereco': endereco,
+            'status_id': status_id,
+            'atualizado': data_hora,
+            'status_fila': status_posto,
+            'disponibilidade': disponibilidade,
+            'tipo_posto': tipo_posto
+        }
 
-    if old is False:
-        # enrich postoInfo with lat and lng and update address entry:
+        
+        # search in parsed_data for this 'posto'
+        # if it is there, update 'fila' info
+        # if it is not there, search for geocoding and add to postoInfo
         try:
-            print('getting geocoding from:', endereco)
-            geo = get_geoloc.geocoding(endereco)
-            lat = geo["results"][0]["geometry"]["location"]["lat"]
-            lng = geo["results"][0]["geometry"]["location"]["lng"]
-            endereco = str(geo["results"][0]["formatted_address"])
+            for record in parsed_data:
+                if record['id_posto'] == postoInfo['id_posto']:
+                    record['status_id'] = postoInfo['status_id']
+                    record['atualizado'] = postoInfo['atualizado']
+                    record['status_fila'] = postoInfo['status_fila']
+                    record['disponibilidade'] = postoInfo['disponibilidade']
+                    old = True
+                    break
         except:
-            print('error getting geocoding from:', endereco)
+            continue
+
+        if old is False:
+            # enrich postoInfo with lat and lng and update address entry:
             try:
-                print('getting geocoding from:', nome_posto)
-                geo = get_geoloc.geocoding(nome_posto)
+                print('getting geocoding from:', endereco)
+                geo = get_geoloc.geocoding(endereco)
                 lat = geo["results"][0]["geometry"]["location"]["lat"]
                 lng = geo["results"][0]["geometry"]["location"]["lng"]
                 endereco = str(geo["results"][0]["formatted_address"])
             except:
-                print('error when getting geocoding from:', endereco, 'and:', nome_posto)
-                geo = lat = lng = None
-        updt = {
-            'endereco': endereco,
-            'coords':{
-                'lat': lat,
-                'lng': lng
+                print('error getting geocoding from:', endereco)
+                try:
+                    print('getting geocoding from:', nome_posto)
+                    geo = get_geoloc.geocoding(nome_posto)
+                    lat = geo["results"][0]["geometry"]["location"]["lat"]
+                    lng = geo["results"][0]["geometry"]["location"]["lng"]
+                    endereco = str(geo["results"][0]["formatted_address"])
+                except:
+                    print('error when getting geocoding from:', endereco, 'and:', nome_posto)
+                    geo = lat = lng = None
+            updt = {
+                'endereco': endereco,
+                'coords':{
+                    'lat': lat,
+                    'lng': lng
+                }
             }
-        }
-        postoInfo.update(updt)
+            postoInfo.update(updt)
 
-        # append postoInfo to record:
-        parsed_data.append(postoInfo)
+            # append postoInfo to record:
+            parsed_data.append(postoInfo)
 
 with open('parsed_data.json', 'w', encoding='utf8') as outfile:
     json.dump(parsed_data, outfile, ensure_ascii=False)
