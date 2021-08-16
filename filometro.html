@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <title>Mapa De Olho na Fila</title>
+    <link rel="icon" href="sao-paulo-fc-logo.png">
+</head>
+
+<body>
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <div id="map" style="height: 100%"></div>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBOk6DWf0AgkN4I1rT-8cCzhDGiGp_okiU&callback=initMap&libraries=&v=weekly"></script>
+    <script src="markers.js"></script>
+    <script>
+        function initMap() {
+            var mapOptions = {
+                zoom: 12,
+                center: { lat: -23.5658, lng: -46.6396 },
+            }
+            var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+            /*
+            # markers = [ 
+            # [{lat,lng}, 'status_id', 'posto', 'atualizado', 'status', 'disponibilidade', 'tipo_posto'],...]
+            */
+
+            i = 0;
+            var markers = [];
+            for (pos in markersList) {
+                i = i + 1;
+                var row = markersList[pos];
+                var info = '<h2>' + row[2] + '</h2>';
+                info = info + '<h4>Tipo de Posto: ' + row[6] + '</h4>';
+                info = info + '<h4>Status: ' + row[4] + '</h4>';
+                info = info + '<h4>Hora da atualização: ' + row[3] + '</h4>';
+                info = info + '<h4>Disponibilidade 2ª Dose: ' + row[5] + '</h4>';
+
+                // ref for icons: https://sites.google.com/site/gmapsdevelopment/
+                var icon = 'http://maps.google.com/mapfiles/ms/icons/'
+                if (row[1] == '1') {            /*sem fila*/
+                    icon = icon + 'green.png'
+                } else if (row[1] == '2') {    /*fila pequena*/
+                    icon = icon + 'yellow.png'
+                } else if (row[1] == '3') {    /*fila média*/
+                    icon = icon + 'orange.png'
+                } else if (row[1] == '4') {    /*fila grande*/
+                    icon = icon + 'red.png'
+                } else if (row[1] == '5') {    /*não funcionando*/
+                    icon = icon + 'blue-dot.png'
+                } else if (row[1] == '6') {    /*aguardando abastecimento 1ª dose*/
+                    icon = icon + 'purple.png'
+                } else if (row[1] == '7') {    /*aguardando abastecimento 1ª e 2ª dose*/
+                    icon = icon + 'pink.png'
+                } else {
+                    icon = icon + 'blue.png'
+                }
+
+                markers.push({
+                    coords: row[0],
+                    title: row[2],
+                    label: row[1],
+                    iconImage: icon,
+                    content: info
+                })
+            }
+            for (var i = 0; i < markers.length; i++) {
+                addMarker(markers[i]);
+            }
+            function addMarker(props) {
+                var marker = new google.maps.Marker({
+                    position: props.coords,
+                    title: props.title,
+                    // label: {text: props.label, fontSize: '10px'},
+                    icon: props.iconImage,
+                    map: map,
+                });
+                if (props.content) {
+                    var infoWindow = new google.maps.InfoWindow({
+                        content: props.content
+                    });
+
+                    marker.addListener('click', function () {
+                        infoWindow.open(map, marker);
+                    });
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
