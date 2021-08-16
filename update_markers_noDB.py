@@ -6,11 +6,9 @@ count = 0
 
 parsed_data = json.loads(open('parsed_data.json', encoding='utf8').read())
 
-fhand1 = codecs.open('markers_noDB.js', 'w', "utf-8")
-fhand2 = codecs.open('C:/Users/lucas.padeiro/Desktop/Personal/Code/paderox.github.io/markers.js', 'w', "utf-8")
+fhand = codecs.open('markers_noDB.js', 'w', "utf-8")
 
-fhand1.write("markersList = [\n")
-fhand2.write("markersList = [\n")
+fhand.write("markersList = [\n")
 
 for entry in parsed_data:
 	posto = entry['nome']
@@ -26,21 +24,18 @@ for entry in parsed_data:
 	try:
 		count = count + 1
 		if count > 1:
-			fhand1.write(",\n")
-			fhand2.write(",\n")
+			fhand.write(",\n")
+		
 		output = "[{lat:" + str(lat) + ",lng:" + str(lng) + "}, '" + str(status_id) + "', '" + posto + "', '" + atualizado + "', '" + status + "', '" + disponibilidade + "', '" + tipo_posto + "']"
-		fhand1.write(output)
-		fhand2.write(output)
+		fhand.write(output)
+	
 	except:
 		continue
 
-fhand1.write("\n];\n")
-fhand2.write("\n];\n")
-fhand1.close()
-fhand2.close()
+fhand.write("\n];\n")
+fhand.close()
 
 print(count, "records written to markers_noDB.js")
-print(count, "records written to markers.js in website DB")
 
 # markers = [ 
 # [{lat,lng}, 'status_id', 'posto', 'atualizado', 'status', 'disponibilidade', 'tipo_posto'],...]
