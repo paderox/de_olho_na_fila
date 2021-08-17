@@ -93,7 +93,6 @@ markersList = [
 [{lat:-23.5538294,lng:-46.4446744}, '5', 'UBS JOSE BONIFACIO II', '2021-08-16 19:00:48.153', 'NÃO FUNCIONANDO', 'nenhuma', 'POSTO FIXO'],
 [{lat:-23.5435771,lng:-46.4094456}, '1', 'UBS GUAIANAZES', '2021-08-16 17:55:57.697', 'SEM FILA', 'coronavac + pfizer + astrazeneca', 'POSTO FIXO'],
 [{lat:-23.5381295,lng:-46.421117}, '3', 'UBS JARDIM AURORA', '2021-08-16 17:57:07.883', 'FILA MÉDIA', 'coronavac + pfizer + astrazeneca', 'POSTO FIXO'],
-[{lat:-23.5424131,lng:-46.392786}, '2', 'UBS JARDIM BANDEIRANTES', '2021-08-16 17:56:00.150', 'FILA PEQUENA', 'coronavac + pfizer + astrazeneca', 'POSTO FIXO'],
 [{lat:-23.5304003,lng:-46.4216256}, '2', 'UBS JARDIM ETELVINA', '2021-08-16 17:58:46.250', 'FILA PEQUENA', 'coronavac + pfizer + astrazeneca', 'POSTO FIXO'],
 [{lat:-23.5470723,lng:-46.3959679}, '4', 'UBS JARDIM FANGANIELLO', '2021-08-16 17:50:36.453', 'FILA GRANDE', 'coronavac + pfizer + astrazeneca', 'POSTO FIXO'],
 [{lat:-23.5247156,lng:-46.4180918}, '3', 'UBS JARDIM ROBRU - GUAIANASES', '2021-08-16 17:56:28.780', 'FILA MÉDIA', 'coronavac + pfizer + astrazeneca', 'POSTO FIXO'],
