@@ -558,4 +558,3 @@ markersList = [
 [{lat:-23.4914008,lng:-46.4821688}, '1', 'CAPS INFANTO JUVENIL ERMELINO MATARAZZO', '2021-08-18 14:48:37.443', 'SEM FILA', 'coronavac + pfizer + astrazeneca', 'POSTO VOLANTE'],
 [{lat:-23.6288157,lng:-46.6463052}, '2', 'UBS PROF. MILTON SANTOS', '2021-08-15 14:46:50.273', 'FILA PEQUENA', 'coronavac + pfizer + astrazeneca', 'POSTO FIXO']
 ];
-                                                           
