@@ -45,7 +45,7 @@ for entry in json_data:
     if (id_posto is None):
         print('id posto None for', endereco)
         continue
-    else:    
+    else:
         cur.execute('INSERT OR REPLACE INTO CRSs (id, nome) VALUES ( ?, ? )', ( id_crs, crs) )
         cur.execute('INSERT OR REPLACE INTO Distritos (id, distrito) VALUES ( ?, ? )', ( id_distrito, distrito) )
         cur.execute('INSERT OR REPLACE INTO StatusFila (posto_id, atualizado, fila, status_posto, checker) VALUES ( ?, ?, ?, ?, ? )', ( id_posto, data_hora, fila, status_posto, str(id_posto + data_hora + fila + status_posto)) )
@@ -68,7 +68,7 @@ for entry in json_data:
                 endereco = enderecoDB
         except:
             exists = False
-        
+
         if exists == True:
             # como já existe linha, devemos apenas atualizar campos relevantes para fila:
             cur.execute('''
